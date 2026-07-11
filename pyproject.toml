@@ -1,0 +1,13 @@
+[project]
+name = "cli-growth"
+version = "1.0.0"
+description = "A CLI stock expo growth calculator"
+authors = [
+    {name="MxpleSticks"}
+]
+dependencies = [
+    "yfinance",
+    "rich"
+]
+
+requires-python = ">=3.13"
