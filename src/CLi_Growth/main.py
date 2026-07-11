@@ -66,3 +66,11 @@ while True:
     except ValueError:
         print("Invalid input. Please enter a whole number.")
 
+
+print("\nCalculating growth...")
+
+rate = getHistoricalReturnRate(stockSymbol)
+
+finalBalance, yearlyData = calculateCompoundGrowth(initialInvestment, monthlyContribution, compoundFrequency, years, rate)
+
+showResults(stockSymbol, finalBalance, yearlyData)
