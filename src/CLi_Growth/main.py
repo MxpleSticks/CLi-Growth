@@ -18,16 +18,21 @@ while True:
         print("Invalid input. Please enter a valid number for the Initial Investment Amount (in USD): ")
 
 while True:
-    try:
-        stockSymbol = input("2. Stock symbol (e.g., AAPL, TSLA):")
-        if not stockSymbol:
-            print("Invalid input. Please enter a valid stock symbol (e.g., AAPL, TSLA): ")
-            continue
+    stockSymbol = input("2. Stock symbol (e.g., AAPL, TSLA):")
+    if not stockSymbol:
+        print("Invalid input. Please enter a valid stock symbol (e.g., AAPL, TSLA): ")
+        continue
 
-        print(f"Verifying stock symbol '{stockSymbol}'...")
-        tickerData = yf.Ticker(stockSymbol)
-        try:
-            
+    print(f"Verifying stock symbol '{stockSymbol}'...")
+    tickerData = yf.Ticker(stockSymbol)
+    try:
+        if tickerData.history(period="1d").empty:
+            print(f"Invalid stock symbol '{stockSymbol}'. Please enter a valid stock symbol (e.g., AAPL, TSLA): ")
+            continue
+        break
+    except:
+        print(f"Error connecting to yfinance for '{stockSymbol}'. please try again")
+
 
 
 monthlyContribution = float(input("3. Monthly Contribution Amount (in USD):"))
