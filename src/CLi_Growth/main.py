@@ -69,7 +69,9 @@ while True:
 
 print("\nCalculating growth...")
 
-rate = getHistoricalReturnRate(stockSymbol)
+raw = getHistoricalReturnRate(stockSymbol)
+inflation = 0.025
+rate = max(0.0, raw - inflation)
 
 finalBalance, yearlyData = calculateCompoundGrowth(initialInvestment, monthlyContribution, compoundFrequency, years, rate)
 

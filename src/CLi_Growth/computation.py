@@ -2,7 +2,7 @@ import yfinance as yf
 
 def getHistoricalReturnRate(stockSymbol):
     ticker = yf.Ticker(stockSymbol)
-    hist = ticker.history(period="max")
+    hist = ticker.history(period="10y")
 
     if(hist.empty or len(hist) < 2):
         return 0.0
