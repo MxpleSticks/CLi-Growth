@@ -8,10 +8,10 @@ The program includes:
 - Historical market data(via yfinance)
 - Compound growth computation engine
 
-# What is exponential stock growth?
+# What is compound growth?
 Compound growth is the process of an investment increasing in value over time that gains value from both the original investment and the value that has been added over time.
 
-For example, if you put **1,000$** into a stock that returned an average of 10% per year, that does not mean that you will earn **100$** per year. Rather, the growth of each year is based on the last year's balance, so that your returns can compound.
+For example, if you put **$1,000** into a stock that returned an average of 10% per year, that does not mean that you will earn **$100** per year. Rather, the growth of each year is based on the last year's balance, so that your returns can compound.
 
 This compounding effect is one of the main factors that can cause long-term investments to grow significantly.
 
@@ -21,7 +21,7 @@ This compounding effect is one of the main factors that can cause long-term inve
 
 1. **main.py** collects the user's inputs.
 
-2. The inputs are then passed into **computation.py**, which downloads the historical data using **yfinance**. Then uses that data to calculate the stocks estimated return over time and computes the investment's compounding growth.
+2. The inputs are then passed into **computation.py**, which downloads the historical data using **yfinance**. Then uses that data to calculate the stock's estimated return over time and computes the investment's compounding growth.
 
 3. The calculation results are then sent back to **main.py**
 
@@ -62,6 +62,6 @@ Python 3.13.13 is recommended (for packages) --> [Here](https://www.python.org/d
 2. Stock Symbol | The stock ticker (e.g. AAPL, TSLA)
 3. Monthly Contribution Amount | How much money will you contribute monthly (can be 0)
 4. Compound Frequency | The frequency used to calculate compound growth (monthly, quarterly, or annually).
-5. Time Horizon | The number of years to calculator the growth over
+5. Time Horizon | The number of years to calculate the growth over
 
 After all of this your results will be displayed in the cli.
