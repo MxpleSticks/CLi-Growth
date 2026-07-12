@@ -1,6 +1,6 @@
 import rich
 import yfinance as yf
-from computation import getHistoricalReturnRate, calculateCompoundGrowth
+from computation import blendedReturnRate, calculateCompoundGrowth
 from display import showResults
 
 
@@ -69,7 +69,7 @@ while True:
 
 print("\nCalculating growth...")
 
-raw = getHistoricalReturnRate(stockSymbol)
+raw = blendedReturnRate(stockSymbol)
 inflation = 0.025
 rate = max(0.0, raw - inflation)
 

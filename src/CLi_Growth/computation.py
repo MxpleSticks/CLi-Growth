@@ -21,6 +21,14 @@ def getHistoricalReturnRate(stockSymbol):
     cagr = (lastPrice / firstPrice) ** (1 / years) - 1
     return cagr
 
+def blendedReturnRate(stockSymbol):
+    stockRate = getHistoricalReturnRate(stockSymbol)
+
+    marketRate = getHistoricalReturnRate("^GSPC")
+
+    blendedRate = (stockRate * 0.30) + (marketRate * 0.70)
+    return blendedRate
+
 
 def calculateCompoundGrowth(initialInvestment, monthlyContribution, compoundFrequency, years, annualRate):
     freqMap = {"monthly" : 12, "quarterly" : 4, "annually" : 1}
