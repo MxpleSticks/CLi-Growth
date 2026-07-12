@@ -1,7 +1,7 @@
 [project]
 name = "cli-growth"
 version = "1.0.0"
-description = "A CLI stock expo growth calculator"
+description = "A CLI stock compound growth calculator"
 authors = [
     {name="MxpleSticks"}
 ]
