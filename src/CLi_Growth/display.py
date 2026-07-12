@@ -1,6 +1,9 @@
-def showResults(stockSymbol, finalBalance, yearlyData):
-    print("-- Growth Summary --")
-    print(f"Your final balance with {stockSymbol} is, {finalBalance}!!!")
+def showResults(portfolioAssets, finalBalance, yearlyData):
+    print("-- Portfolio Growth Summary --")
+    print("your final balance is: ${}".format(round(finalBalance, 2)))
+    
+    for i in portfolioAssets:
+        print('- {}: {}%'.format(i['symbol'], i['weight'] * 100))
 
     for i in yearlyData:
-        print(f"{i['year']} ${i['balance']}")
+        print('Year {}: ${}'.format(i['year'],round(i['balance'], 2)))

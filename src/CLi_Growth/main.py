@@ -1,6 +1,6 @@
 import rich
 import yfinance as yf
-from computation import blendedReturnRate, calculateCompoundGrowth
+from computation import portfolioRate, calculateCompoundGrowth
 from display import showResults
 
 
@@ -20,21 +20,33 @@ while True:
     except ValueError:
         print("Invalid input. Please enter a valid number for the Initial Investment Amount (in USD).")
 
-while True:
-    stockSymbol = input("2. Stock symbol (e.g., AAPL, TSLA):")
-    if not stockSymbol:
-        print("Invalid input. Please enter a valid stock symbol (e.g., AAPL, TSLA): ")
-        continue
+print("\nplease enter your portfolio allocation (must equal 100%)")
+portfolioAssets = []
+totalWeight = 0.0
 
-    print(f"Verifying stock symbol '{stockSymbol}'...")
-    tickerData = yf.Ticker(stockSymbol)
+while totalWeight < 100.0:
+    stockSymbol = input('2. Enter stock symbol (e.g. AAPL, TSLA) (current total: {}%):'.format(totalWeight)).upper()
+    if not stockSymbol:
+        continue
+    print('verifying {}...'.format(stockSymbol))
     try:
-        if(tickerData.history(period="1d").empty):
-            print(f"Invalid stock symbol '{stockSymbol}'. Please enter a valid stock symbol (e.g., AAPL, TSLA).")
+        if(yf.Ticker(stockSymbol).history(period='1d').empty):
+            print("invalid symbol. try again.")
             continue
-        break
     except:
-        print(f"Error connecting to yfinance for '{stockSymbol}'. please try again")
+        print("error connecting. Try again.")
+        continue
+    
+    try:
+        assetWeight = float(input("enter percentage for {} (e.g. 50 for 50%):".format(stockSymbol)))
+        if(assetWeight <= 0 or totalWeight + assetWeight > 100.0):
+            print("invalid weight or exceeds 100%")
+            continue
+        
+        portfolioAssets.append({'symbol': stockSymbol, 'weight': assetWeight / 100.0})
+        totalWeight = totalWeight + assetWeight
+    except:
+        print('Enter a valid number')
 
 while True:
     try:
@@ -69,10 +81,10 @@ while True:
 
 print("\nCalculating growth...")
 
-raw = blendedReturnRate(stockSymbol)
+raw = portfolioRate(portfolioAssets)
 inflation = 0.025
 rate = max(0.0, raw - inflation)
 
 finalBalance, yearlyData = calculateCompoundGrowth(initialInvestment, monthlyContribution, compoundFrequency, years, rate)
 
-showResults(stockSymbol, finalBalance, yearlyData)
+showResults(portfolioAssets, finalBalance, yearlyData)
