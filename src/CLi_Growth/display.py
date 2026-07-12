@@ -3,4 +3,4 @@ def showResults(stockSymbol, finalBalance, yearlyData):
     print(f"Your final balance with {stockSymbol} is, {finalBalance}!!!")
 
     for i in yearlyData:
-        print(f"{i['year']}$ {i['balance']}")
+        print(f"{i['year']} ${i['balance']}")
