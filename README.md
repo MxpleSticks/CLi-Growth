@@ -60,6 +60,7 @@ Python 3.13.13 is recommended (for packages) --> [Here](https://www.python.org/d
 
 1. Initial Investment Amount | How much money you already have in your brokerage
 2. Stock Symbol | The stock ticker (e.g. AAPL, TSLA)
+2.5 Stock Percentage | amount of your portfolio that you want to allocate to the previous symbol
 3. Monthly Contribution Amount | How much money will you contribute monthly (can be 0)
 4. Compound Frequency | The frequency used to calculate compound growth (monthly, quarterly, or annually).
 5. Time Horizon | The number of years to calculate the growth over
