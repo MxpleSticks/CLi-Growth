@@ -1,24 +1,25 @@
-import rich
+from rich.console import Console
 import yfinance as yf
 from computation import portfolioRate, calculateCompoundGrowth
 from display import showResults
 
+console = Console()
 
-print("======================")
-print("Welcome to CLi Growth!")
-print("======================")
-print("<This is a simple CLI tool to help you calculate compound stock growth>\n")
+console.print("[bold blue]======================[/bold blue]")
+console.print("[bold blue]Welcome to CLi Growth![/bold blue]")
+console.print("[bold blue]======================[/bold blue]")
+console.print("[italic]<This is a simple CLI tool to help you calculate compound stock growth>[/italic]\n")
 print("Please enter the following details to calculate your stock growth:")
 
 while True:
     try:
         initialInvestment = float(input("1. Initial Investment Amount (in USD): "))
         if(initialInvestment < 0):
-            print("Invalid input. Please enter a valid number for the Initial Investment Amount (in USD).")
+            console.print("[red]Invalid input. Please enter a valid number for the Initial Investment Amount (in USD).[/red]")
             continue
         break
     except ValueError:
-        print("Invalid input. Please enter a valid number for the Initial Investment Amount (in USD).")
+        console.print("[red]Invalid input. Please enter a valid number for the Initial Investment Amount (in USD).[/red]")
 
 print("\nplease enter your portfolio allocation (must equal 100%)")
 portfolioAssets = []
@@ -31,32 +32,32 @@ while totalWeight < 100.0:
     print('verifying {}...'.format(stockSymbol))
     try:
         if(yf.Ticker(stockSymbol).history(period='1d').empty):
-            print("invalid symbol. try again.")
+            console.print("[red]invalid symbol. try again.[/red]")
             continue
     except:
-        print("error connecting. Try again.")
+        console.print("[red]error connecting. Try again.[/red]")
         continue
     
     try:
         assetWeight = float(input("enter percentage for {} (e.g. 50 for 50%):".format(stockSymbol)))
         if(assetWeight <= 0 or totalWeight + assetWeight > 100.0):
-            print("invalid weight or exceeds 100%")
+            console.print("[red]invalid weight or exceeds 100%[/red]")
             continue
         
         portfolioAssets.append({'symbol': stockSymbol, 'weight': assetWeight / 100.0})
         totalWeight = totalWeight + assetWeight
     except:
-        print('Enter a valid number')
+        console.print('[red]Enter a valid number[/red]')
 
 while True:
     try:
         monthlyContribution = float(input("3. Monthly Contribution Amount (in USD):"))
         if(monthlyContribution < 0):
-            print("Invalid input. Please enter a valid Monthly Contribution Amount (in USD).")
+            console.print("[red]Invalid input. Please enter a valid Monthly Contribution Amount (in USD).[/red]")
             continue
         break
     except ValueError:
-        print("Invalid input. Please enter a valid Monthly Contribution Amount (in USD).")
+        console.print("[red]Invalid input. Please enter a valid Monthly Contribution Amount (in USD).[/red]")
 
 
 validFrequency = ["monthly", "quarterly", "annually"]
@@ -65,21 +66,21 @@ while True:
     if(compoundFrequency in validFrequency):
         break
     else:
-        print(f"Please choose from: {', '.join(validFrequency)}")
+        console.print(f"[red]Please choose from: {', '.join(validFrequency)}[/red]")
 
 
 while True:
     try:
         years = int(input("5. Time horizon in years (e.g. 5, 40, etc...): "))
         if(years <= 0):
-            print("Time horizon must be at least 1 year.")
+            console.print("[red]Time horizon must be at least 1 year.[/red]")
             continue
         break
     except ValueError:
-        print("Invalid input. Please enter a whole number.")
+        console.print("[red]Invalid input. Please enter a whole number.[/red]")
 
 
-print("\nCalculating growth...")
+console.print("[bold yellow]\nCalculating growth...[/bold yellow]")
 
 raw = portfolioRate(portfolioAssets)
 inflation = 0.025
