@@ -5,8 +5,9 @@
 
 The program includes:
 - Simple terminal interface/interactions
-- Historical market data(via yfinance)
+- Historical market data (via yfinance)
 - Compound growth computation engine
+- Terminal graph plotting and PDF report generation
 
 # What is compound growth?
 Compound growth is the process of an investment increasing in value over time that gains value from both the original investment and the value that has been added over time.
@@ -25,7 +26,9 @@ This compounding effect is one of the main factors that can cause long-term inve
 
 3. The calculation results are then sent back to **main.py**
 
-4. Finally, **display.py** formats and displays the results.
+4. **display.py** formats and displays the results.
+
+5. You can optionally download a pdf version of the data to your downloads folder
 
 # Installation
 ### Using the installer (Recommended):
@@ -56,13 +59,17 @@ Python 3.13.13 is recommended (for packages) --> [Here](https://www.python.org/d
 **The only way to run this program on macOS or Linux is to build via source.**
 
 # Usage
+**It is important to note that inflation is a fixed rate of 2.5%**
+
 **When the program is launched, you will be asked to enter the following details:**
 
-1. Initial Investment Amount | How much money you already have in your brokerage
-2. Stock Symbol | The stock ticker (e.g. AAPL, TSLA)
-2.5 Stock Percentage | amount of your portfolio that you want to allocate to the previous symbol
-3. Monthly Contribution Amount | How much money will you contribute monthly (can be 0)
-4. Compound Frequency | The frequency used to calculate compound growth (monthly, quarterly, or annually).
-5. Time Horizon | The number of years to calculate the growth over
+1. Initial Investment Amount | How much money you already have in your brokerage.
+2. Portfolio Allocations (Loops until 100% total):
+    - Stock Symbol | Enter ticker symbols (e.g. AAPL, TSLA).
+    - Stock Weight (%) | Percentage of your portfolio allocated to that ticker.
+*Note: Prompt will repeat until total portfolio weight reaches 100%.*
 
-After all of this your results will be displayed in the cli.
+3. Monthly Contribution Amount | How much money will you contribute monthly (can be 0).
+4. Compound Frequency | The frequency used to calculate compound growth (monthly, quarterly, or annually).
+5. Time Horizon | The number of years to calculate the growth over.
+6. PDF Report Export (optional) | pick `y` if you want to get a pdf version of your results (Exports to the downloads folder).
