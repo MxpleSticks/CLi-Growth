@@ -41,10 +41,17 @@ def showResults(portfolioAssets, finalBalance, yearlyData):
 
     low = min(balances)
     high = max(balances)
-    step = (low + high) / 4
+    step = (high - low) / 4
 
     ticks = [low, low + step, low + (2 * step), low + (3 * step), high]
-    labels = [f"${int(x):,}" for x in ticks]
+    
+    def formatTick(val):
+        numStr = str(int(val))
+        if(len(numStr) > 12):
+            return f"${numStr[:12]}..."
+        return f"${int(val):,}"
+    
+    labels = [formatTick(x) for x in ticks]
 
     plt.yticks(ticks, labels)
 
