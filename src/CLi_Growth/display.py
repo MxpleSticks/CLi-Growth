@@ -48,7 +48,8 @@ def showResults(portfolioAssets, finalBalance, yearlyData):
     def formatTick(val):
         numStr = str(int(val))
         if(len(numStr) > 12):
-            return f"${numStr[:12]}..."
+            truncateVal = int(numStr[:12])
+            return f"${truncateVal:,}..."
         return f"${int(val):,}"
     
     labels = [formatTick(x) for x in ticks]
