@@ -94,4 +94,4 @@ createPDF = input("Would you like to download a PDF report of these results? (y/
 if(createPDF in ['y', 'yes']):
     exportToPDF(portfolioAssets, finalBalance, yearlyData)
 
-input("[red]\nPress enter to exit[/red]")
+console.input("[red]\nPress enter to exit[/red]")

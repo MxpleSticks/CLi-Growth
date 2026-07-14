@@ -1,4 +1,6 @@
 import plotext as plt
+from pathlib import Path
+from fpdf import FPDF
 from rich.console import Console, Group
 from rich.panel import Panel
 from rich.table import Table
@@ -59,4 +61,46 @@ def showResults(portfolioAssets, finalBalance, yearlyData):
     console.print(masterGrid)
 
 def exportToPDF(portfolioAssets, finalBalance, yearlyData):
-    pass
+    downloadsPath = Path.home() / "Downloads"
+    filePath = downloadsPath / "Portfolio Growth Report"
+
+    pdf = FPDF()
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
+
+    pdf.set_font('Helvetica', 'B', 18)
+    pdf.cell(0, 10, 'CLi Growth Report', ln=True, align='C')
+    pdf.ln(5)
+
+    pdf.set_font('Helvetica', 'B', 14)
+    pdf.cell(0, 8, f"Final Projected Balance: ${finalBalance:,.2f}", ln=True)
+    pdf.ln(5)
+
+    pdf.set_font('Helvetica', 'B', 12)
+    pdf.cell(0, 8, "Portfolio Allocations", ln=True)
+
+    pdf.set_font('Helvetica', 'B', 10)
+    pdf.cell(60, 7, 'Stock Symbol', border=1)
+    pdf.cell(40, 7, 'Weight', border=1, ln=True)
+
+    pdf.set_font('Helvetica', '', 10)
+    for i in portfolioAssets:
+        pdf.cell(60, 7, i['symbol'], border=1)
+        pdf.cell(40, 7, f'{i['weight'] * 100:.1f}%', border=1, ln=True)
+
+    pdf.ln(8)
+
+    pdf.set_font('Helvetica', 'B', 12)
+    pdf.cell(0, 8, 'Yearly Growth Breakdown', ln=True)
+
+    pdf.set_font('Helvetica', 'B', 10)
+    pdf.cell(40, 7, 'year', border=1)
+    pdf.cell(60, 7, 'Balance', border=1, ln=True)
+
+    pdf.set_font('Helvetica', '', 10)
+    for i in yearlyData:
+        pdf.cell(40, 7, str(i['year']), border=1)
+        pdf.cell(60, 7, f'${i['balance']:,.2f}', border=1, ln=True)
+    
+    pdf.output(str(filePath))
+    console.print(f"\n[bold green]Report successfully saved to you downloads folder: '{filePath}'![/bold green]")
