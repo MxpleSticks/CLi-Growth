@@ -1,3 +1,4 @@
+import charset_normalizer
 from rich.console import Console
 import yfinance as yf
 from computation import portfolioRate, calculateCompoundGrowth
