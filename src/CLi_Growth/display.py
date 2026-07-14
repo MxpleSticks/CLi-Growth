@@ -57,3 +57,6 @@ def showResults(portfolioAssets, finalBalance, yearlyData):
     masterGrid.add_row(summaryPanel, plotRenderable)
 
     console.print(masterGrid)
+
+def exportToPDF(portfolioAssets, finalBalance, yearlyData):
+    pass

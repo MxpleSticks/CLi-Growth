@@ -1,7 +1,7 @@
 from rich.console import Console
 import yfinance as yf
 from computation import portfolioRate, calculateCompoundGrowth
-from display import showResults
+from display import showResults, exportToPDF
 
 console = Console()
 
@@ -89,3 +89,9 @@ rate = max(0.0, raw - inflation)
 finalBalance, yearlyData = calculateCompoundGrowth(initialInvestment, monthlyContribution, compoundFrequency, years, rate)
 
 showResults(portfolioAssets, finalBalance, yearlyData)
+
+createPDF = input("Would you like to download a PDF report of these results? (y/n): ").strip().lower()
+if(createPDF in ['y', 'yes']):
+    exportToPDF(portfolioAssets, finalBalance, yearlyData)
+
+input("[red]\nPress enter to exit[/red]")
