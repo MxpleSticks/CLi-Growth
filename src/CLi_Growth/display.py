@@ -62,7 +62,7 @@ def showResults(portfolioAssets, finalBalance, yearlyData):
 
 def exportToPDF(portfolioAssets, finalBalance, yearlyData):
     downloadsPath = Path.home() / "Downloads"
-    filePath = downloadsPath / "Portfolio Growth Report"
+    filePath = downloadsPath / "Portfolio_Growth_Report.pdf"
 
     pdf = FPDF()
     pdf.set_auto_page_break(auto=True, margin=15)
@@ -76,31 +76,42 @@ def exportToPDF(portfolioAssets, finalBalance, yearlyData):
     pdf.cell(0, 8, f"Final Projected Balance: ${finalBalance:,.2f}", ln=True)
     pdf.ln(5)
 
+    startY = pdf.get_y()
+
     pdf.set_font('Helvetica', 'B', 12)
-    pdf.cell(0, 8, "Portfolio Allocations", ln=True)
+    pdf.cell(75, 8, "Portfolio Allocations", ln=True)
 
     pdf.set_font('Helvetica', 'B', 10)
-    pdf.cell(60, 7, 'Stock Symbol', border=1)
-    pdf.cell(40, 7, 'Weight', border=1, ln=True)
+    pdf.cell(45, 7, 'Stock Symbol', border=1)
+    pdf.cell(30, 7, 'Weight', border=1, ln=True)
 
     pdf.set_font('Helvetica', '', 10)
     for i in portfolioAssets:
-        pdf.cell(60, 7, i['symbol'], border=1)
-        pdf.cell(40, 7, f'{i['weight'] * 100:.1f}%', border=1, ln=True)
+        pdf.cell(45, 7, i['symbol'], border=1)
+        pdf.cell(30, 7, f"{i['weight'] * 100:.1f}%", border=1, ln=True)
 
-    pdf.ln(8)
+    leftTableEndY = pdf.get_y()
+
+    rightX = 105
+    pdf.set_xy(rightX, startY)
 
     pdf.set_font('Helvetica', 'B', 12)
-    pdf.cell(0, 8, 'Yearly Growth Breakdown', ln=True)
+    pdf.cell(85, 8, 'Yearly Growth Breakdown', ln=True)
 
+    pdf.set_x(rightX)
     pdf.set_font('Helvetica', 'B', 10)
-    pdf.cell(40, 7, 'year', border=1)
-    pdf.cell(60, 7, 'Balance', border=1, ln=True)
+    pdf.cell(30, 7, 'year', border=1)
+    pdf.cell(55, 7, 'Balance', border=1, ln=True)
 
     pdf.set_font('Helvetica', '', 10)
     for i in yearlyData:
-        pdf.cell(40, 7, str(i['year']), border=1)
-        pdf.cell(60, 7, f'${i['balance']:,.2f}', border=1, ln=True)
-    
+        pdf.set_x(rightX)
+        pdf.cell(30, 7, str(i['year']), border=1)
+        pdf.cell(55, 7, f"${i['balance']:,.2f}", border=1, ln=True)
+
+    rightTableEndY = pdf.get_y()
+
+    pdf.set_y(max(leftTableEndY, rightTableEndY) + 5)
+
     pdf.output(str(filePath))
     console.print(f"\n[bold green]Report successfully saved to you downloads folder: '{filePath}'![/bold green]")
